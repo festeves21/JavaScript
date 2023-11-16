@@ -43,7 +43,7 @@ class Raton extends DispositivoEntrada{
     }
 
     toString(){
-        return ` Raton: [idRaton: ${this._idRaton}, tipoEntrada: ${ this._tipoEntrada}, marca: ${this._marca} ]`
+        return `Raton: [idRaton: ${this._idRaton}, tipoEntrada: ${ this._tipoEntrada}, marca: ${this._marca} ]`
     }
 }
 
@@ -104,6 +104,53 @@ class Monitor {
 
 }
 
+class Computadora{
+    static contadorComputadoras = 0;
+
+    constructor(nombre, monitor, raton, teclado){
+        this._idComputadora = ++ Computadora.contadorComputadoras;
+        this._nombre = nombre;
+        this._monitor = monitor;
+        this._raton = raton;
+        this._teclado = teclado;
+    }
+
+    get idComputadora(){
+        return this._idComputadora;   
+    }
+    toString(){
+        return `Computadora ${this._idComputadora}: ${this._nombre} \n ${this._monitor} \n ${this._raton} \n ${this._teclado} `
+    }
+
+}
+
+class Orden {
+    static contadorOrdenes = 0;
+
+    constructor(){
+        this._idOrden = ++Orden.contadorOrdenes;
+        this._computadoras = [];
+        
+    }
+
+    get idOrden(){
+        return this._idOrden;   
+    }
+
+    agregarComputadora(computadora){
+        this._computadoras.push(computadora);
+    }
+
+    mostrarOrden(){
+        let computadorasOrden = ''
+        for(let computadora of this._computadoras){
+           computadorasOrden += `\n ${computadora}` 
+        }
+        console.log(`Orden: ${ this._idOrden}, Computadoras: ${computadorasOrden}`)
+    }
+
+}
+
 
 let raton1 = new Raton ('USB', 'HP');
 console.log( raton1.toString());
@@ -115,7 +162,23 @@ console.log( teclado1.toString());
 let teclado2 = new Teclado ('Bueltooth', 'Alienware');
 console.log( teclado2.toString());
 
-let monitor1 = new Monitor ('LG', '17');
+let monitor1 = new Monitor ('LG', 27);
 console.log( monitor1.toString());
-let monitor2 = new Monitor ('MSI', '21');
+let monitor2 = new Monitor ('MSI', 21);
 console.log( monitor2.toString());
+
+let computadora1 = new Computadora('HP', monitor1 , raton1, teclado1);
+console.log( `${computadora1}`);
+
+let computadora2 = new Computadora('DELL', monitor2 , raton2, teclado2);
+console.log( `${computadora2}`);
+
+let orden1 = new Orden();
+orden1.agregarComputadora(computadora1);
+orden1.agregarComputadora(computadora2);
+orden1.mostrarOrden();
+
+let orden2 = new Orden();
+orden2.agregarComputadora(computadora2);
+orden2.agregarComputadora(computadora2);
+orden2.mostrarOrden();
