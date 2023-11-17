@@ -34,3 +34,16 @@ async function miFuncionConPromesa(){
     return 'saludos con promesa y async'
 }
 
+miFuncionConPromesa().then(valor=>console.log(valor));
+
+//Asyn con await
+
+async function functionConPromesaYAwait(){
+
+    let miPromesa = new Promise( resolver =>{
+        resolver('Promesa con await');
+    });
+    console.log( await miPromesa);
+}
+
+functionConPromesaYAwait();
