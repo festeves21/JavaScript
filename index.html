@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo DOM con Javascript</title>
+    <style>
+        .azul{
+            color:blue;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="cabecero" class="azul">Ejemplo DOM con Javascript</h1>
+    <p id="parrafo" class="azul">Saludos!</p>
+    <p id="parrafo2" class="azul">Otro parrafo</p>
+
+    <script>
+        let cabecero = document.getElementById('cabecero');
+        console.log( `valor cabecero: ${ cabecero.innerHTML} `) ;
+        let parrafo = document.getElementById('parrafo');
+        console.log( `valor cabecero: ${ parrafo.innerHTML} `) ;
+
+        let parrafos = document.getElementsByTagName('p') ;
+        console.log(` No. parrafos: ${parrafos.length}`);
+
+        for(let i =0 ; i< parrafos.length; i++){
+            console.log( ` i:${i} - ${parrafos[i].innerHTML}`);
+        }
+
+        let parrafos1 = document.getElementsByClassName('azul') ;
+
+        
+        for(let i =0 ; i< parrafos1.length; i++){
+            console.log( ` i:${i} - ${parrafos1[i].innerHTML}`);
+            
+        }
+        console.log('Solo parrafos')
+        let parrafos2 = document.querySelectorAll('p.azul') ;
+     
+        
+        for(let i =0 ; i< parrafos2.length; i++){
+            console.log( ` i:${i} - ${parrafos2[i].innerHTML}`);  
+        }
+
+    </script>
+
+
+</body>
+</html>

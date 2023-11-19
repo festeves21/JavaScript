@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manejo Dom con Javascript</title>
+</head>
+<body>
+    <h1 id="titulo">Manejo DOM con Javascript</h1>
+    Nombre: <input id="nombre" type="text" name="nombre" />
+    <br/>
+    Apellido: <input id="apellido" type="text" name="apellido" value="Perez" onfocus="cambiar(this)" onblur="cambiarOblur(this)"/>
+    <br/>
+
+    <br/>
+
+    <script>
+
+
+        function cambiar(a){
+            a.style.background ='red';
+        }
+
+        function cambiarOblur(a){
+            a.style.background ='blue';
+        }
+             
+        document.getElementById('nombre').addEventListener('focus' , cambiar);
+
+        function cambiar(evento){
+            let coponent = evento.target
+            console.log(coponent);
+           
+            coponent.style.background ='green';
+        }
+
+
+
+    </script>
+</body>
+</html>
