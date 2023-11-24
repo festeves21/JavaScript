@@ -14,6 +14,7 @@ const ingresos = [
 let cargarApp = ()=> {
     cargarCabecero();
     cargarIngresos();
+    cargarEgresos();
 }
 
 let totalIngresos = () =>{
@@ -54,12 +55,16 @@ const formatoPorcentaje =(valor)=>{
 }
 
 const cargarIngresos = ()=>{
-    let ingresosHTML = 'x';
+    let ingresosHTML='';
     for(let ingreso of ingresos){
         ingresosHTML += crearIngresoHTML(ingreso);
-        console.log(ingresosHTML);
+        //console.log(ingresosHTML);
     }
-    document.getElementById('lista-ingresos').innerHTML = ingresosHTML
+    const xxs = document.getElementById('lista-ingresos')
+    
+    //console.log(xxs);
+    xxs.innerHTML = ingresosHTML
+
 
 }
 
@@ -71,11 +76,82 @@ const crearIngresoHTML = (ingreso) => {
       <div class="elemento_valor">${formatoMoneda(ingreso.valor)}</div>
       <div class="elemento_eliminar">
         <button class="elemento_eliminar--btn">
-          <ion-icon name="close-outline"></ion-icon>
+          <ion-icon name="close-outline" onclick='eliminarIngreso(${ingreso.id})'></ion-icon>
         </button>
       </div>
     </div>
   </div>
     `;
     return variablehtml;
+}
+
+const cargarEgresos = ()=>{
+    let egresosHTML='';
+    let totalegreso = totalEgresos();
+    let porcentaje =0;
+    for(let egreso of egresos){
+        porcentaje=egreso.valor/totalegreso;
+        egresosHTML += crearEgresoHTML(egreso,porcentaje);
+        
+    }
+    const xxs = document.getElementById('lista-egresos')
+    //console.log(egresosHTML);
+    //console.log(xxs);
+    xxs.innerHTML = egresosHTML
+
+
+}
+
+const crearEgresoHTML = (egreso, porcentaje) => {
+    let variablehtml = `
+        <div class="elemento limpiarEstilos">
+            <div class="elemento_descripcion limpiarEstilos">${egreso.descripcion}</div>
+            <div class="derecha limpiarEstilos">
+                <div class="elemento_valor">${formatoMoneda(egreso.valor)}</div>
+                <div class="elemento_porcentaje">${formatoPorcentaje(porcentaje)}</div>
+                <div class="elemento_eliminar">
+                    <button class="elemento_eliminar--btn">
+                        <ion-icon name="close-circle-outline" onclick='eliminarEgreso(${egreso.id})' ></ion-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    return variablehtml;
+}
+
+const eliminarIngreso = (id)=>{
+    let indiceEliminar = ingresos.findIndex( ingreso =>ingreso.id === id );
+    ingresos.splice(indiceEliminar,1);
+    cargarCabecero();
+    cargarIngresos();
+
+}
+
+const eliminarEgreso = (id)=>{
+    let indiceEliminar = egresos.findIndex( egreso =>egreso.id === id );
+    egresos.splice(indiceEliminar,1);
+    cargarCabecero();
+    cargarEgresos();
+
+}
+
+let agregarDato = () =>{
+    let forma = document.forms['forma'];
+    let tipo = forma['tipo'];
+    let descripcion = forma['descripcion']
+    let valor = forma['valor'];
+
+    if(descripcion.value !== '' && valor !== ''){
+        if(tipo.value === 'ingreso'){
+            ingresos.push( new Ingreso(descripcion.value, Number(valor.value)));
+            cargarCabecero();
+            cargarIngresos();
+        }else if (tipo.value === 'egreso' ){
+            egresos.push( new Egreso(descripcion.value, +valor.value));
+            cargarCabecero();
+            cargarEgresos();
+        }
+    }
+
 }
